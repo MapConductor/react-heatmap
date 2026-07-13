@@ -24,12 +24,16 @@ import type { HeatmapOverlayState } from './HeatmapOverlayState';
 
 // ─── Context ─────────────────────────────────────────────────────────────────
 
-const HeatmapPointContext = createContext<OverlayCollector<HeatmapPointState> | null>(null);
+export const HeatmapPointContext = createContext<OverlayCollector<HeatmapPointState> | null>(null);
 
 function useHeatmapPointCollector(): OverlayCollector<HeatmapPointState> {
     const ctx = useContext(HeatmapPointContext);
     if (!ctx) throw new Error('HeatmapPoint must be rendered inside <HeatmapOverlay>');
     return ctx;
+}
+
+function defaultWeightProvider(state: HeatmapPointState): number {
+    return state.weight;
 }
 
 // ─── HeatmapOverlay ──────────────────────────────────────────────────────────
@@ -57,6 +61,7 @@ export type HeatmapOverlayProps = (HeatmapOverlayStateProps | HeatmapOverlayPara
     points?: HeatmapPointState[];
     tileSize?: number;
     trackPointUpdates?: boolean;
+    disableTileServerCache?: boolean;
     children?: React.ReactNode;
 };
 
@@ -73,7 +78,7 @@ export function HeatmapOverlay(props: HeatmapOverlayProps): React.ReactElement |
     const opacity = stateProp?.opacity ?? props.opacity ?? HeatmapDefaults.DEFAULT_OPACITY;
     const gradient = stateProp?.gradient ?? props.gradient ?? HeatmapGradient.DEFAULT;
     const maxIntensity = stateProp?.maxIntensity ?? props.maxIntensity ?? null;
-    const weightProvider = stateProp?.weightProvider ?? props.weightProvider ?? ((s: HeatmapPointState) => s.weight);
+    const weightProvider = stateProp?.weightProvider ?? props.weightProvider ?? defaultWeightProvider;
 
     // Stable per-mount references
     const groupId = useMemo(() => `heatmap-${Math.random().toString(36).slice(2)}`, []);
