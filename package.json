@@ -19,6 +19,8 @@
   },
   "files": [
     "android",
+    "ios",
+    "MapConductorReactHeatmap.podspec",
     "react-native.config.js",
     "dist"
   ],

@@ -22,13 +22,13 @@ export type { HeatmapOverlayProps, HeatmapPointProps };
 let nextOverlayId = 1;
 
 export function HeatmapOverlay(props: HeatmapOverlayProps): React.ReactElement | null {
-    if (Platform.OS !== 'android') {
+    if (Platform.OS !== 'android' && Platform.OS !== 'ios') {
         return <WebHeatmapOverlay {...props} />;
     }
-    return <AndroidHeatmapOverlay {...props} />;
+    return <NativeHeatmapOverlay {...props} />;
 }
 
-function AndroidHeatmapOverlay(props: HeatmapOverlayProps): React.ReactElement | null {
+function NativeHeatmapOverlay(props: HeatmapOverlayProps): React.ReactElement | null {
     const {
         state: stateProp,
         points: pointsProp,

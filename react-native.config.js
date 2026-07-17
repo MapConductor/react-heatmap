@@ -7,6 +7,9 @@ module.exports = {
           'import com.mapconductor.react.heatmap.MapConductorHeatmapPackage;',
         packageInstance: 'new MapConductorHeatmapPackage()',
       },
+      ios: {
+        sourceDir: './ios',
+      },
     },
   },
 };

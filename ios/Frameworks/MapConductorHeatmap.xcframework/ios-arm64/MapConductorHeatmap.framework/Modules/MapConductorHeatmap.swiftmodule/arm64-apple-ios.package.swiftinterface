@@ -1,0 +1,232 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name MapConductorHeatmap -package-name ios_heatmap
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Accelerate
+import Combine
+import Foundation
+import MapConductorCore
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+final public class HeatmapCameraController : MapConductorCore.OverlayControllerProtocol {
+  public typealias StateType = Swift.Void
+  public typealias EntityType = Swift.Void
+  public typealias EventType = Swift.Void
+  final public let zIndex: Swift.Int
+  final public var clickListener: ((Swift.Void) -> Swift.Void)?
+  public init(renderer: MapConductorHeatmap.HeatmapTileRenderer)
+  final public func add(data: [Swift.Void]) async
+  final public func update(state: Swift.Void) async
+  final public func clear() async
+  final public func find(position: any MapConductorCore.GeoPointProtocol) -> Swift.Void?
+  final public func onCameraChanged(mapCameraPosition: MapConductorCore.MapCameraPosition) async
+  final public func destroy()
+  @objc deinit
+}
+public struct HeatmapGradientStop : Swift.Hashable {
+  public let position: Swift.Double
+  public let color: UIKit.UIColor
+  public init(position: Swift.Double, color: UIKit.UIColor)
+  public static func == (lhs: MapConductorHeatmap.HeatmapGradientStop, rhs: MapConductorHeatmap.HeatmapGradientStop) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+final public class HeatmapGradient : Swift.Hashable {
+  final public let stops: [MapConductorHeatmap.HeatmapGradientStop]
+  public init(stops: [MapConductorHeatmap.HeatmapGradientStop])
+  final public func startPoints() -> [Swift.Float]
+  public static func == (lhs: MapConductorHeatmap.HeatmapGradient, rhs: MapConductorHeatmap.HeatmapGradient) -> Swift.Bool
+  final public func hash(into hasher: inout Swift.Hasher)
+  public static let `default`: MapConductorHeatmap.HeatmapGradient
+  @objc deinit
+  final public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum HeatmapDefaults {
+  public static let defaultRadiusPx: Swift.Int
+  public static let defaultOpacity: Swift.Double
+  public static let defaultMaxZoom: Swift.Int
+}
+@_Concurrency.MainActor @preconcurrency public struct HeatmapOverlay : MapConductorCore.ViewBasedMapOverlay, Swift.Identifiable {
+  @_Concurrency.MainActor @preconcurrency public let id: Swift.String
+  @_Concurrency.MainActor @preconcurrency public init(_ state: MapConductorHeatmap.HeatmapOverlayState, @MapConductorHeatmap.HeatmapContentBuilder content: () -> MapConductorHeatmap.HeatmapViewContent = { HeatmapViewContent() })
+  @_Concurrency.MainActor @preconcurrency public init(state: MapConductorHeatmap.HeatmapOverlayState, @MapConductorHeatmap.HeatmapContentBuilder content: () -> MapConductorHeatmap.HeatmapViewContent = { HeatmapViewContent() })
+  @_Concurrency.MainActor @preconcurrency public init(radiusPx: Swift.Int = HeatmapDefaults.defaultRadiusPx, opacity: Swift.Double = HeatmapDefaults.defaultOpacity, gradient: MapConductorHeatmap.HeatmapGradient = .default, maxIntensity: Swift.Double? = nil, weightProvider: @escaping (MapConductorHeatmap.HeatmapPointState) -> Swift.Double = HeatmapOverlayState.defaultWeightProvider, tileSize: Swift.Int = HeatmapTileRenderer.defaultTileSize, trackPointUpdates: Swift.Bool = false, disableTileServerCache: Swift.Bool = false, @MapConductorHeatmap.HeatmapContentBuilder content: () -> MapConductorHeatmap.HeatmapViewContent = { HeatmapViewContent() })
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public func append(to content: inout MapConductorCore.MapViewContent)
+  public typealias Body = @_opaqueReturnTypeOf("$s19MapConductorHeatmap0C7OverlayV4bodyQrvp", 0) __
+  public typealias ID = Swift.String
+}
+@available(*, deprecated, renamed: "HeatmapOverlay")
+@_Concurrency.MainActor @preconcurrency public struct HeatmapOverlayWithParameters<Content> : SwiftUICore.View where Content : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(radiusPx: Swift.Int = HeatmapDefaults.defaultRadiusPx, opacity: Swift.Double = HeatmapDefaults.defaultOpacity, gradient: MapConductorHeatmap.HeatmapGradient = .default, maxIntensity: Swift.Double? = nil, weightProvider: @escaping (MapConductorHeatmap.HeatmapPointState) -> Swift.Double = HeatmapOverlayState.defaultWeightProvider, tileSize: Swift.Int = HeatmapTileRenderer.defaultTileSize, trackPointUpdates: Swift.Bool = false, disableTileServerCache: Swift.Bool = false, @SwiftUICore.ViewBuilder content: @escaping () -> Content)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @available(*, deprecated, renamed: "HeatmapOverlay")
+  public typealias Body = @_opaqueReturnTypeOf("$s19MapConductorHeatmap0C21OverlayWithParametersV4bodyQrvp", 0) __<Content>
+}
+final public class HeatmapOverlayState : Combine.ObservableObject {
+  final public var radiusPx: Swift.Int {
+    get
+    set
+  }
+  final public var opacity: Swift.Double {
+    get
+    set
+  }
+  final public var gradient: MapConductorHeatmap.HeatmapGradient {
+    get
+    set
+  }
+  final public var maxIntensity: Swift.Double? {
+    get
+    set
+  }
+  final public var weightProvider: (MapConductorHeatmap.HeatmapPointState) -> Swift.Double {
+    get
+    set
+  }
+  convenience public init(tileSize: Swift.Int = HeatmapTileRenderer.defaultTileSize, radiusPx: Swift.Int = HeatmapDefaults.defaultRadiusPx, opacity: Swift.Double = HeatmapDefaults.defaultOpacity, gradient: MapConductorHeatmap.HeatmapGradient = .default, maxIntensity: Swift.Double? = nil, weightProvider: @escaping (MapConductorHeatmap.HeatmapPointState) -> Swift.Double = HeatmapOverlayState.defaultWeightProvider)
+  @available(*, deprecated, message: "Use init(tileSize:radiusPx:opacity:gradient:maxIntensity:weightProvider:) instead.")
+  convenience public init(radiusPx: Swift.Int = HeatmapDefaults.defaultRadiusPx, opacity: Swift.Double = HeatmapDefaults.defaultOpacity, gradient: MapConductorHeatmap.HeatmapGradient = .default, maxIntensity: Swift.Double? = nil, weightProvider: @escaping (MapConductorHeatmap.HeatmapPointState) -> Swift.Double = HeatmapOverlayState.defaultWeightProvider)
+  public init(tileSize: Swift.Int, radiusPx: Swift.Int, opacity: Swift.Double, gradient: MapConductorHeatmap.HeatmapGradient, maxIntensity: Swift.Double?, weightProvider: @escaping (MapConductorHeatmap.HeatmapPointState) -> Swift.Double, trackPointUpdates: Swift.Bool, disableTileServerCache: Swift.Bool)
+  @objc deinit
+  final public func copy(radiusPx: Swift.Int? = nil, opacity: Swift.Double? = nil, gradient: MapConductorHeatmap.HeatmapGradient? = nil, maxIntensity: Swift.Double? = nil, weightProvider: ((MapConductorHeatmap.HeatmapPointState) -> Swift.Double)? = nil) -> MapConductorHeatmap.HeatmapOverlayState
+  final public func onCameraChanged(_ cameraPosition: MapConductorCore.MapCameraPosition)
+  public static let defaultWeightProvider: (_ state: MapConductorHeatmap.HeatmapPointState) -> Swift.Double
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+}
+public struct HeatmapPoint : Swift.Hashable {
+  public let position: MapConductorCore.GeoPoint
+  public let weight: Swift.Double
+  public init(position: MapConductorCore.GeoPoint, weight: Swift.Double)
+  public static func == (a: MapConductorHeatmap.HeatmapPoint, b: MapConductorHeatmap.HeatmapPoint) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+final public class HeatmapPointCollector {
+  final public let flow: Combine.CurrentValueSubject<[Swift.String : MapConductorHeatmap.HeatmapPointState], Swift.Never>
+  public init()
+  final public func add(state: MapConductorHeatmap.HeatmapPointState)
+  final public func remove(id: Swift.String)
+  @objc deinit
+}
+public struct HeatmapPointFingerPrint : Swift.Equatable, Swift.Hashable {
+  public let id: Swift.Int
+  public let position: Swift.Int
+  public let weight: Swift.Int
+  public let extra: Swift.Int
+  public static func == (a: MapConductorHeatmap.HeatmapPointFingerPrint, b: MapConductorHeatmap.HeatmapPointFingerPrint) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+final public class HeatmapPointState : Combine.ObservableObject, Swift.Identifiable, Swift.Equatable, Swift.Hashable {
+  final public let id: Swift.String
+  @Combine.Published<MapConductorCore.GeoPoint> @_projectedValueProperty($position) final public var position: MapConductorCore.GeoPoint {
+    get
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    set
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    _modify
+  }
+  final public var $position: Combine.Published<MapConductorCore.GeoPoint>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  @Combine.Published<Swift.Double> @_projectedValueProperty($weight) final public var weight: Swift.Double {
+    get
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    set
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    _modify
+  }
+  final public var $weight: Combine.Published<Swift.Double>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  @Combine.Published<Swift.AnyHashable?> @_projectedValueProperty($extra) final public var extra: Swift.AnyHashable? {
+    get
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    set
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    _modify
+  }
+  final public var $extra: Combine.Published<Swift.AnyHashable?>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  public init(position: MapConductorCore.GeoPoint, weight: Swift.Double = 1.0, id: Swift.String? = nil, extra: Swift.AnyHashable? = nil)
+  final public func copy(id: Swift.String? = nil, position: MapConductorCore.GeoPoint? = nil, weight: Swift.Double? = nil, extra: Swift.AnyHashable? = nil) -> MapConductorHeatmap.HeatmapPointState
+  final public func fingerPrint() -> MapConductorHeatmap.HeatmapPointFingerPrint
+  final public func asFlow() -> Combine.AnyPublisher<MapConductorHeatmap.HeatmapPointFingerPrint, Swift.Never>
+  public static func == (lhs: MapConductorHeatmap.HeatmapPointState, rhs: MapConductorHeatmap.HeatmapPointState) -> Swift.Bool
+  final public func hash(into hasher: inout Swift.Hasher)
+  final public func hashCode() -> Swift.Int
+  public typealias ID = Swift.String
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+  final public var hashValue: Swift.Int {
+    get
+  }
+}
+@_Concurrency.MainActor @preconcurrency public struct HeatmapPointView : MapConductorHeatmap.HeatmapContentItemProtocol, SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(state: MapConductorHeatmap.HeatmapPointState)
+  @_Concurrency.MainActor @preconcurrency public init(position: MapConductorCore.GeoPoint, weight: Swift.Double = 1.0, id: Swift.String? = nil, extra: Swift.AnyHashable? = nil)
+  @_Concurrency.MainActor @preconcurrency public func append(to content: inout MapConductorHeatmap.HeatmapViewContent)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s19MapConductorHeatmap0C9PointViewV4bodyQrvp", 0) __
+}
+public struct HeatmapPoints : MapConductorHeatmap.HeatmapContentItemProtocol {
+  public init(_ states: [MapConductorHeatmap.HeatmapPointState])
+  public func append(to content: inout MapConductorHeatmap.HeatmapViewContent)
+}
+final public class HeatmapTileRenderer : MapConductorCore.TileProvider {
+  final public let tileSize: Swift.Int
+  public init(tileSize: Swift.Int = HeatmapTileRenderer.defaultTileSize, cacheSizeKb: Swift.Int = HeatmapTileRenderer.defaultCacheSizeKb)
+  final public func update(points: [MapConductorHeatmap.HeatmapPoint], radiusPx: Swift.Int, gradient: MapConductorHeatmap.HeatmapGradient, maxIntensity: Swift.Double?)
+  final public func updateCameraZoom(_ zoom: Swift.Double)
+  final public func resetCameraZoom()
+  final public func renderTile(request: MapConductorCore.TileRequest) -> Foundation.Data?
+  public static let defaultTileSize: Swift.Int
+  public static let defaultCacheSizeKb: Swift.Int
+  @objc deinit
+}
+public struct HeatmapViewContent {
+  public init()
+}
+public protocol HeatmapContentItemProtocol {
+  func append(to content: inout MapConductorHeatmap.HeatmapViewContent)
+}
+@_functionBuilder public enum HeatmapContentBuilder {
+  public static func buildBlock() -> MapConductorHeatmap.HeatmapViewContent
+  public static func buildBlock(_ components: MapConductorHeatmap.HeatmapViewContent...) -> MapConductorHeatmap.HeatmapViewContent
+  public static func buildExpression<T>(_ expression: T) -> MapConductorHeatmap.HeatmapViewContent where T : MapConductorHeatmap.HeatmapContentItemProtocol
+  public static func buildExpression(_ expression: MapConductorHeatmap.HeatmapViewContent) -> MapConductorHeatmap.HeatmapViewContent
+  public static func buildOptional(_ component: MapConductorHeatmap.HeatmapViewContent?) -> MapConductorHeatmap.HeatmapViewContent
+  public static func buildEither(first component: MapConductorHeatmap.HeatmapViewContent) -> MapConductorHeatmap.HeatmapViewContent
+  public static func buildEither(second component: MapConductorHeatmap.HeatmapViewContent) -> MapConductorHeatmap.HeatmapViewContent
+  public static func buildArray(_ components: [MapConductorHeatmap.HeatmapViewContent]) -> MapConductorHeatmap.HeatmapViewContent
+}
+extension MapConductorHeatmap.HeatmapOverlay : Swift.Sendable {}
+@available(*, deprecated, renamed: "HeatmapOverlay")
+extension MapConductorHeatmap.HeatmapOverlayWithParameters : Swift.Sendable {}
+extension MapConductorHeatmap.HeatmapPointView : Swift.Sendable {}
