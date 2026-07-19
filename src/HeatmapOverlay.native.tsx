@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useReducer } from 'react';
-import { Platform } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import { OverlayCollector } from '@mapconductor/js-sdk-core';
 import {
     useNativeMapExtension,
@@ -24,6 +24,13 @@ let nextOverlayId = 1;
 export function HeatmapOverlay(props: HeatmapOverlayProps): React.ReactElement | null {
     if (Platform.OS !== 'android' && Platform.OS !== 'ios') {
         return <WebHeatmapOverlay {...props} />;
+    }
+    if (Platform.OS === 'ios') {
+        // Accessing the legacy module forces React Native to instantiate it. Its initializer
+        // registers the provider-agnostic heatmap renderer with NativeMapExtensionRegistry.
+        // Without this access, bridgeless/new-architecture apps can leave the module lazy and
+        // the first heatmap descriptor reaches the provider before a renderer exists.
+        void NativeModules.MapConductorHeatmapPackage;
     }
     return <NativeHeatmapOverlay {...props} />;
 }
