@@ -10,9 +10,12 @@ Pod::Spec.new do |s|
   s.author = package["author"]
   s.homepage = "https://github.com/mapconductor/react-sdk"
   s.source = { :path => __dir__ }
-  s.platform = :ios, "15.0"
+  s.platform = :ios, "15.1"
   s.source_files = "ios/*.{h,m,mm,swift}"
-  s.vendored_frameworks = "ios/Frameworks/MapConductorHeatmap.xcframework"
+  # MapConductorHeatmap is a source pod (see ios-sdk/ios-heatmap's podspec), not a vendored
+  # prebuilt xcframework - see ios-sdk/CLAUDE.md's "iOS Provider Distribution" section.
   s.dependency "React-Core"
+  s.dependency "MapConductorCore"
   s.dependency "MapConductorReactNativeCore"
+  s.dependency "MapConductorHeatmap"
 end
