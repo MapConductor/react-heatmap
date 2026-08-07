@@ -14,13 +14,13 @@ import {
     TileServerRegistry,
     createRasterLayerState,
     type GeoPointInterface,
-    type MapCameraPosition,
 } from '@mapconductor/js-sdk-core';
 import { MapContext, RasterLayer } from '@mapconductor/js-sdk-react';
 import { HeatmapGradient, HeatmapDefaults } from './HeatmapGradient';
 import { HeatmapTileRenderer } from './HeatmapTileRenderer';
 import { HeatmapPointState } from './HeatmapPointState';
 import type { HeatmapOverlayState } from './HeatmapOverlayState';
+import { HeatmapCameraController } from './HeatmapCameraController';
 
 // ─── Context ─────────────────────────────────────────────────────────────────
 
@@ -146,23 +146,29 @@ export function HeatmapOverlay(props: HeatmapOverlayProps): React.ReactElement |
     }, [groupId, tileServer, renderer]);
 
     // ── Camera zoom tracking ──────────────────────────────────────────────────
+    // オーバーレイコントローラとして登録すればカメラ変更が伝播してくる
+    // （android-heatmap / ios-heatmap の HeatmapCameraController と同じ）。
+    // 以前はコントローラを `{ cameraMoveEndCallback?: ... }` へキャストして protected な
+    // フィールドを覗き、setCameraMoveEndListener の単一スロットへ既存リスナーを退避・連結
+    // してから復元していたが、内部実装への依存であるうえ、同じ手を使う拡張が 2 つ載ると
+    // 互いに上書きし合う。
+    const cameraController = useMemo(() => new HeatmapCameraController(renderer), [renderer]);
+
     useEffect(() => {
         if (!controller) return;
 
-        // Chain any existing listener so we don't break other components
-        type WithCb = { cameraMoveEndCallback?: ((c: MapCameraPosition) => void) | null };
-        const prev = (controller as unknown as WithCb).cameraMoveEndCallback ?? null;
+        controller.registerOverlayController?.(cameraController);
 
-        controller.setCameraMoveEndListener((camera: MapCameraPosition) => {
-            renderer.updateCameraZoom(camera.zoom);
-            prev?.(camera);
-        });
-
-        const initial = controller.getCameraPosition();
+        // 初期ズームは state（`mapViewState.cameraPosition`）から取る。
+        // コントローラの `getCameraPosition()` はプロバイダ内部用。
+        // 以降の変化は登録済みオーバーレイへの `onCameraChanged` で届く。
+        const initial = mapCtx?.state?.cameraPosition ?? null;
         if (initial) renderer.updateCameraZoom(initial.zoom);
 
-        return () => { controller.setCameraMoveEndListener(prev); };
-    }, [controller, renderer]);
+        return () => {
+            controller.unregisterOverlayController?.(cameraController);
+        };
+    }, [controller, renderer, cameraController, mapCtx]);
 
     // ── Subscribe to collector for child-based points ─────────────────────────
     useEffect(() => {

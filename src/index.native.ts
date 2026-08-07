@@ -30,3 +30,4 @@ export {
     type HeatmapOverlayProps,
     type HeatmapPointProps,
 } from './HeatmapOverlay.native';
+export { HeatmapCameraController } from './HeatmapCameraController';
