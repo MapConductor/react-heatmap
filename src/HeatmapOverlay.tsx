@@ -15,7 +15,7 @@ import {
     createRasterLayerState,
     type GeoPointInterface,
 } from '@mapconductor/js-sdk-core';
-import { MapContext, RasterLayer } from '@mapconductor/js-sdk-react';
+import { MapContext, RasterLayer, mapContextInternal } from '@mapconductor/js-sdk-react';
 import { HeatmapGradient, HeatmapDefaults } from './HeatmapGradient';
 import { HeatmapTileRenderer } from './HeatmapTileRenderer';
 import { HeatmapPointState } from './HeatmapPointState';
@@ -87,7 +87,9 @@ export function HeatmapOverlay(props: HeatmapOverlayProps): React.ReactElement |
     const tileServer = useMemo(() => TileServerRegistry.get(), []);
 
     const mapCtx = useContext(MapContext);
-    const controller = mapCtx?.controller ?? null;
+    // 拡張モジュールは SDK 内部側。コントローラは公開型に出していないので
+    // 内部アクセサ経由で取り出す。
+    const controller = mapCtx ? mapContextInternal(mapCtx).controller : null;
 
     // RasterLayerState created once
     const rasterStateRef = useRef(
