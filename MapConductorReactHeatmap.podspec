@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   # MapConductorHeatmap is a source pod (see ios-sdk/ios-heatmap's podspec), not a vendored
   # prebuilt xcframework - see ios-sdk/CLAUDE.md's "iOS Provider Distribution" section.
   s.dependency "React-Core"
-  s.dependency "MapConductorCore"
+  s.dependency "MapConductorCore", "~> 1.3.0"
   s.dependency "MapConductorReactNativeCore"
-  s.dependency "MapConductorHeatmap"
+  s.dependency "MapConductorHeatmap", "~> 1.3.0"
 end
