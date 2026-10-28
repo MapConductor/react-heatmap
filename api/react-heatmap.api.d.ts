@@ -181,4 +181,5 @@ declare class HeatmapCameraController implements OverlayController<void, void, v
     destroy(): void;
 }
 
-export { COLOR_TRANSPARENT, HeatmapCameraController, HeatmapDefaults, HeatmapGradient, type HeatmapGradientStop, HeatmapOverlay, type HeatmapOverlayProps, HeatmapOverlayState, HeatmapPoint, type HeatmapPointData, type HeatmapPointFingerPrint, type HeatmapPointProps, HeatmapPointState, HeatmapPoints, HeatmapTileRenderer, colorAlpha, colorArgb, colorBlue, colorGreen, colorRed, colorRgb, createHeatmapPoint };
+export { COLOR_TRANSPARENT, HeatmapCameraController, HeatmapDefaults, HeatmapGradient, HeatmapOverlay, HeatmapOverlayState, HeatmapPoint, HeatmapPointState, HeatmapPoints, HeatmapTileRenderer, colorAlpha, colorArgb, colorBlue, colorGreen, colorRed, colorRgb, createHeatmapPoint };
+export type { HeatmapGradientStop, HeatmapOverlayProps, HeatmapPointData, HeatmapPointFingerPrint, HeatmapPointProps };
