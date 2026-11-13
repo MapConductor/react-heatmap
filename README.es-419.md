@@ -4,6 +4,12 @@
 
 Extensión de superposición de mapa de calor para el SDK de React de MapConductor. Renderiza grandes conjuntos de puntos como un mapa de calor teselado dentro de cualquier vista de mapa de proveedor (`react-for-googlemaps`, `react-for-maplibre`, `react-for-here`, …), con radio, gradiente, opacidad y pesos por punto configurables. Funciona en la web y, mediante los módulos de Android/iOS incluidos, en React Native.
 
+## Demostración
+
+[![Mapa de calor de oficinas postales en Google Maps](https://raw.githubusercontent.com/MapConductor/react-heatmap/main/docs/images/demo.jpg)](https://demo-react.mapconductor.com/google-maps/heatmap-layer/en)
+
+La [demo en vivo](https://demo-react.mapconductor.com/google-maps/heatmap-layer/en) dibuja con este paquete 24,526 oficinas postales de Japón como mapa de calor. El proveedor se cambia en la parte superior de la página. El código está en el inicio rápido de abajo.
+
 ## Instalación
 
 ```shell
