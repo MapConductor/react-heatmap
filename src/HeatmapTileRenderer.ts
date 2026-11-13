@@ -183,13 +183,18 @@ export class HeatmapTileRenderer implements TileProvider {
         const minY = y * tileWidth - padding;
         const maxY = (y + 1) * tileWidth + padding;
 
-        // Quick intersection test with padded bounds
+        // Quick intersection test with padded bounds. Points across the date line
+        // still bleed into this tile (the binning below wraps them), so the data
+        // bounds are also compared one world-width to either side.
         const b = s.bounds;
         const padB = {
             minX: b.minX - padding, maxX: b.maxX + padding,
             minY: b.minY - padding, maxY: b.maxY + padding,
         };
-        if (minX > padB.maxX || maxX < padB.minX || minY > padB.maxY || maxY < padB.minY) {
+        const overlapsX = (offset: number): boolean =>
+            minX <= padB.maxX + offset && maxX >= padB.minX + offset;
+        if (minY > padB.maxY || maxY < padB.minY
+            || !(overlapsX(0) || overlapsX(-WORLD_WIDTH) || overlapsX(WORLD_WIDTH))) {
             return null;
         }
 
