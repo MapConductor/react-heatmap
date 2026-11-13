@@ -4,6 +4,12 @@
 
 MapConductor React SDK のヒートマップオーバーレイ拡張です。大規模なポイントデータセットを、任意のプロバイダのマップビュー(`react-for-googlemaps`、`react-for-maplibre`、`react-for-here` など)の中にタイル化されたヒートマップとして描画します。半径・グラデーション・不透明度・ポイントごとの重みを設定できます。Web と、同梱の Android/iOS モジュールを通じて React Native の両方で動作します。
 
+## デモ
+
+[![Google Maps 上の郵便局ヒートマップ](https://raw.githubusercontent.com/MapConductor/react-heatmap/main/docs/images/demo.jpg)](https://demo-react.mapconductor.com/google-maps/heatmap-layer/en)
+
+[ライブデモ](https://demo-react.mapconductor.com/google-maps/heatmap-layer/en)では、このパッケージで日本全国 24,526 件の郵便局をヒートマップにしています。プロバイダは画面上部で切り替えられます。コードは下のクイックスタートにあります。
+
 ## インストール
 
 ```shell

@@ -8,6 +8,12 @@ datasets as a tiled heatmap inside any provider map view
 configurable radius, gradient, opacity, and per-point weights. Works on the
 web and, through the bundled Android/iOS modules, in React Native.
 
+## Demo
+
+[![Post office heatmap on Google Maps](https://raw.githubusercontent.com/MapConductor/react-heatmap/main/docs/images/demo.jpg)](https://demo-react.mapconductor.com/google-maps/heatmap-layer/en)
+
+The [live demo](https://demo-react.mapconductor.com/google-maps/heatmap-layer/en) draws 24,526 post offices in Japan as a heatmap with this package. The provider can be switched at the top of the page. The code is in the Quick start below.
+
 ## Installation
 
 ```shell
